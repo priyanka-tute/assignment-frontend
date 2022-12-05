@@ -11,7 +11,7 @@ const Navbar = () => {
       <img className={styles.logo} src={"/logo.png"} alt="TuteDude" />
       <div className={styles.nav}>
         <div className={styles.links}>
-          <Link to="" className={path === "/" ? styles.active : ""}>
+          <Link to="" className={path.includes("/") ? styles.active : ""}>
             Assignment Received
           </Link>
           <Link to="">Assignment Library</Link>

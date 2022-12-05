@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import styles from "../styles/Home.module.css";
 
 const Home = () => {
+  const navigate = useNavigate();
   const submissions = [
     {
       name: "Aravind Khosla",
@@ -9,6 +11,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "aravindkhosla@gmail.com",
+      assignmentId: 0,
     },
     {
       name: "Sumit Agarwal",
@@ -16,6 +19,7 @@ const Home = () => {
       progress: 1,
       enrollDate: "23 Aug, 2022",
       email: "sumitagarwal@gmail.com",
+      assignmentId: 1,
     },
     {
       name: "Pranjal Sahu",
@@ -23,6 +27,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "pranjalsahu@gmail.com",
+      assignmentId: 2,
     },
     {
       name: "Kumar Ranjit",
@@ -30,6 +35,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "vindkhosla@gmail.com",
+      assignmentId: 3,
     },
     {
       name: "Abhishek Singh",
@@ -37,6 +43,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "ravindkhosla@gmail.com",
+      assignmentId: 4,
     },
     {
       name: "Nishta Pathak",
@@ -44,6 +51,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "nishtha@gmail.com",
+      assignmentId: 4,
     },
     {
       name: "Aravind Kumar",
@@ -51,6 +59,7 @@ const Home = () => {
       progress: 1,
       enrollDate: "23 Aug, 2022",
       email: "aravind@gmail.com",
+      assignmentId: 5,
     },
     {
       name: "Anjali Kumari",
@@ -58,6 +67,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "kumrianjali@gmail.com",
+      assignmentId: 6,
     },
     {
       name: "Roshan Jain",
@@ -65,6 +75,7 @@ const Home = () => {
       progress: 1,
       enrollDate: "23 Aug, 2022",
       email: "roshanjain@gmail.com",
+      assignmentId: 7,
     },
     {
       name: "Ritu Jain",
@@ -72,6 +83,7 @@ const Home = () => {
       progress: 0.15,
       enrollDate: "23 Aug, 2022",
       email: "ritujain@gmail.com",
+      assignmentId: 0,
     },
   ];
   return (
@@ -100,7 +112,12 @@ const Home = () => {
             <th>Email ID</th>
           </tr>
           {submissions.map((data) => (
-            <tr>
+            <tr
+              className={styles.submission}
+              onClick={() => {
+                navigate("/" + data.assignmentId);
+              }}
+            >
               <td>{data.name}</td>
               <td>{data.course}</td>
               <td>
