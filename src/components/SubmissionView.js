@@ -8,7 +8,7 @@ const SubmissionView = ({ data }) => {
   const [currentTextSolution, setCurrentTextSolution] = useState();
 
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
-  const [currentFeedback, setFeedbackForm] = useState();
+  // const [currentFeedback, setFeedbackForm] = useState();
 
   const textSolutionClickHandler = (current) => {
     setCurrentTextSolution(current);

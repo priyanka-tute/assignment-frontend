@@ -14,6 +14,9 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
       files: files,
       links: links,
     });
+    setLinks([]);
+    setFiles([]);
+    setText("");
   };
 
   return (
