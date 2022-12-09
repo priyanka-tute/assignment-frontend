@@ -106,7 +106,7 @@ const Assignment = () => {
     <div>
       <div className={styles.header}>
         <div className={styles.left}>
-          <div>Courses &gt; {data.topic_name}</div>
+          <div>Courses &gt; {decodeURIComponent(course)}</div>
           <div className={styles.data}>
             <select>
               <option>26 Aug, 2022</option>
