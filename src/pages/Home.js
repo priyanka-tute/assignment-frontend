@@ -86,6 +86,17 @@ const Home = () => {
       assignmentId: 0,
     },
   ];
+
+  const courses = [];
+
+  submissions.forEach((sub) => {
+    if (!courses.includes(sub.course)) {
+      courses.push(sub.course);
+    }
+  });
+
+  console.log(courses);
+
   return (
     <div>
       <div className={styles.filters}>
@@ -94,11 +105,17 @@ const Home = () => {
           <option>26 Aug, 2022</option>
           <option>26 Aug, 2022</option>
         </select>
-        <select>
-          <option>Select Course</option>
-          <option>Course 1</option>
-          <option>Course 2</option>
-          <option>Course 3</option>
+        <select
+          onChange={(e) => {
+            if (e.target.value === "") return;
+
+            navigate(`/${e.target.value}`);
+          }}
+        >
+          <option value="">Select Course</option>
+          {courses.map((course) => (
+            <option value={encodeURIComponent(course)}>{course}</option>
+          ))}
         </select>
       </div>
       <div className={styles.main}>

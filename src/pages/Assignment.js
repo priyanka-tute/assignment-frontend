@@ -1,10 +1,17 @@
 import React from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import SubmissionView from "../components/SubmissionView";
 import styles from "../styles/Assignment.module.css";
+import ErrorPage from "./ErrorPage";
 
 const Assignment = () => {
-  const { id } = useParams();
+  const { course } = useParams();
+  const courses = ["UI/UX", "Python", "MERN", "Photoshop", "FA", "C++", "Java"];
+  const navigate = useNavigate();
+
+  if (!courses.includes(decodeURIComponent(course))) {
+    return <ErrorPage notFound />;
+  }
 
   const fet = {
     success: true,
@@ -92,7 +99,9 @@ const Assignment = () => {
   const newAssignment = 51;
   const unreviewed = 68;
 
-  const data = fet.data[id];
+  let count = 0;
+
+  const data = fet.data[0];
   return (
     <div>
       <div className={styles.header}>
@@ -115,8 +124,18 @@ const Assignment = () => {
           </div>
         </div>
         <div className={styles.right}>
-          <select>
-            <option>UI/UX</option>
+          <select
+            onChange={(e) => {
+              if (e.target.value === "") navigate("/", { relative: false });
+
+              navigate(`/${e.target.value}`);
+            }}
+            value={course}
+          >
+            <option value="">Select Course</option>
+            {courses.map((course) => (
+              <option value={course}>{course}</option>
+            ))}
           </select>
           <select>
             <option>Sort By: Latest First</option>
@@ -124,11 +143,11 @@ const Assignment = () => {
         </div>
       </div>
       <div className={styles.submissions}>
-        {data.questions.map((ques, ind) =>
-          ques.submissions.map((subm, i) => (
+        {data.questions.map((ques) =>
+          ques.submissions.map((subm) => (
             <SubmissionView
               data={{
-                number: subm.attempt,
+                number: ++count,
                 time: "11:15 AM",
                 userInfo: {
                   profilePic: "",

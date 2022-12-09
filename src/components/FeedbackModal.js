@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import styles from "../styles/Modal.module.css";
 
@@ -8,16 +8,96 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
   const [text, setText] = useState("");
   // const [full, setFull] = useState([]);
 
+  const defaultLink = { text: "", link: "", ind: -1 };
+  const [currLink, setCurrLink] = useState({ text: "", link: "", ind: -1 });
+
+  const [showLinkModal, setShowLinkModal] = useState(false);
+
   const submitHandler = () => {
-    console.log({
-      text: text,
-      files: files,
-      links: links,
-    });
-    setLinks([]);
-    setFiles([]);
-    setText("");
+    if (files.length === 0 && links.length === 0 && text.length === 0) {
+      return window.alert("No Feedback given");
+    }
+    if (window.confirm("Are you sure to submit?")) {
+      console.log({
+        text: text,
+        files: files,
+        links: links,
+      });
+      setLinks([]);
+      setFiles([]);
+      setText("");
+      setShowResub(true);
+    }
   };
+
+  useEffect(() => {
+    if (!showFeedbackForm) setShowLinkModal(false);
+  }, [showFeedbackForm]);
+
+  const [showResub, setShowResub] = useState(false);
+  const [reSubmit, setReSubmit] = useState(undefined);
+
+  if (reSubmit === true) {
+    return (
+      <Modal
+        shown={showFeedbackForm}
+        hideClose
+        closeHandler={closeHandler}
+        className={styles.feedback}
+      >
+        <h5>Feedback for Assignment 1</h5>
+        <div className={styles.feedback_cont}>Resubmission is required</div>
+      </Modal>
+    );
+  }
+
+  if (reSubmit === false) {
+    return (
+      <Modal
+        shown={showFeedbackForm}
+        hideClose
+        closeHandler={closeHandler}
+        className={styles.feedback}
+      >
+        <h5>Feedback for Assignment 1</h5>
+        <div className={styles.feedback_cont}>
+          Verified, No re-submission Required
+        </div>
+      </Modal>
+    );
+  }
+
+  if (showResub)
+    return (
+      <Modal
+        shown={showFeedbackForm}
+        hideClose
+        closeHandler={closeHandler}
+        className={styles.feedback}
+      >
+        <h5>Feedback for Assignment 1</h5>
+        <div className={styles.feedback_cont}>
+          Ask Student for Re-submission of this Assignment ?{" "}
+          <div>
+            <button
+              className={styles.yes}
+              onClick={() => {
+                setReSubmit(true);
+              }}
+            >
+              Yes
+            </button>{" "}
+            <button
+              onClick={() => {
+                setReSubmit(false);
+              }}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </Modal>
+    );
 
   return (
     <Modal
@@ -36,6 +116,37 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
           }`}
         >
           Add files, links or texts as your feedback
+        </div>
+        <div className={styles.links}>
+          {links.map((link, ind) => (
+            <div className={styles.link}>
+              {link.text}
+              <div>
+                <a href={link.link} target="_blank" rel="noreferrer">
+                  Go to link :{" "}
+                </a>
+                <span>{link.link}</span> |{" "}
+                <button
+                  onClick={() => {
+                    setLinks((currLinks) =>
+                      currLinks.filter((c, i) => i !== ind)
+                    );
+                  }}
+                >
+                  remove
+                </button>{" "}
+                |{" "}
+                <button
+                  onClick={() => {
+                    setCurrLink({ ...link, ind: ind });
+                    setShowLinkModal(true);
+                  }}
+                >
+                  change
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
         <textarea
           value={text}
@@ -92,7 +203,12 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
             </label>
           </div>
           <div>
-            <span>
+            <span
+              onClick={() => {
+                setCurrLink(defaultLink);
+                setShowLinkModal(true);
+              }}
+            >
               <svg
                 width="21"
                 height="10"
@@ -111,6 +227,79 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
         </div>
         <button onClick={submitHandler}>Submit</button>
       </div>
+      <Modal
+        shown={showLinkModal}
+        closeHandler={() => {
+          setShowLinkModal(false);
+        }}
+        className={styles.link_modal}
+        rounded
+        hideClose
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="#434343"
+          xmlns="http://www.w3.org/2000/svg"
+          onClick={() => {
+            setShowLinkModal(false);
+            setCurrLink(defaultLink);
+          }}
+        >
+          <path d="M1.70703 0.292969L0.292969 1.70703L7.58594 9L0.292969 16.293L1.70703 17.707L9 10.4141L16.293 17.707L17.707 16.293L10.4141 9L17.707 1.70703L16.293 0.292969L9 7.58594L1.70703 0.292969Z" />
+        </svg>
+
+        <h5>Insert Link</h5>
+        <label>
+          <span>url</span>
+          <input
+            type="text"
+            value={currLink.link}
+            onChange={(e) => {
+              setCurrLink((c) => ({ ...c, link: e.target.value }));
+            }}
+          />
+        </label>
+        <label>
+          <span>Text</span>
+          <input
+            type="text"
+            value={currLink.text}
+            onChange={(e) => {
+              setCurrLink((c) => ({ ...c, text: e.target.value }));
+            }}
+          />
+        </label>
+        <button
+          onClick={() => {
+            if (!currLink.text || !currLink.link) {
+              window.alert("Link or text not found");
+              return;
+            }
+            if (!currLink.link.includes("http", 0)) {
+              window.alert("'http' not found in link");
+
+              return;
+            }
+            if (currLink.ind !== -1) {
+              setLinks((currLinks) => [
+                ...currLinks.filter((c, i) => i !== currLink.ind),
+                { text: currLink.text, link: currLink.link },
+              ]);
+            } else {
+              setLinks((currLinks) => [
+                ...currLinks,
+                { text: currLink.text, link: currLink.link },
+              ]);
+            }
+            setCurrLink(defaultLink);
+            setShowLinkModal(false);
+          }}
+        >
+          {currLink.ind === -1 ? "Insert" : "Change"}
+        </button>
+      </Modal>
     </Modal>
   );
 };

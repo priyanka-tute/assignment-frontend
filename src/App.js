@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Layout from "./components/Layout";
 import Assignment from "./pages/Assignment";
+import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 
 function App() {
@@ -13,9 +14,10 @@ function App() {
     <RouterProvider
       router={createBrowserRouter(
         createRoutesFromElements(
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout />} errorElement={<ErrorPage />}>
             <Route path="" element={<Home />} />
-            <Route path=":id" element={<Assignment />} />
+            <Route path=":course" element={<Assignment />} />
+            {/* <Route path="courses/:course" element={<Assignment />} /> */}
           </Route>
         )
       )}
