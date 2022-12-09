@@ -128,7 +128,7 @@ const Assignment = () => {
             onChange={(e) => {
               if (e.target.value === "") navigate("/", { relative: false });
 
-              navigate(`/${e.target.value}`);
+              navigate(`/${encodeURIComponent(e.target.value)}`);
             }}
             value={course}
           >
