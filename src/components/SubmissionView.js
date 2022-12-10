@@ -56,6 +56,7 @@ const SubmissionView = ({ data }) => {
             <div>
               {data.solution.filename.map((file, ind) => (
                 <div
+                  key={ind}
                   className={styles.link}
                   onClick={() => {
                     window.open(data.solution.filelink[ind], "_blank");
@@ -84,6 +85,7 @@ const SubmissionView = ({ data }) => {
             <div>
               {data.solution.linkText.map((link, ind) => (
                 <div
+                  key={ind}
                   className={styles.link}
                   onClick={() => {
                     window.open(data.solution.link[ind], "_blank");

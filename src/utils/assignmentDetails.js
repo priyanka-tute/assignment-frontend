@@ -1,30 +1,90 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import SubmissionView from "../components/SubmissionView";
-import styles from "../styles/Assignment.module.css";
-import { fetchCourseSubmissions } from "../utils/assignmentDetails";
-import ErrorPage from "./ErrorPage";
+export const fetchSubmissions = async () => {
+  return [
+    {
+      name: "Aravind Khosla",
+      course: "UI/UX",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "aravindkhosla@gmail.com",
+      assignmentId: 0,
+    },
+    {
+      name: "Sumit Agarwal",
+      course: "Python",
+      progress: 1,
+      enrollDate: "23 Aug, 2022",
+      email: "sumitagarwal@gmail.com",
+      assignmentId: 1,
+    },
+    {
+      name: "Pranjal Sahu",
+      course: "MERN",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "pranjalsahu@gmail.com",
+      assignmentId: 2,
+    },
+    {
+      name: "Kumar Ranjit",
+      course: "MERN",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "vindkhosla@gmail.com",
+      assignmentId: 3,
+    },
+    {
+      name: "Abhishek Singh",
+      course: "Photoshop",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "ravindkhosla@gmail.com",
+      assignmentId: 4,
+    },
+    {
+      name: "Nishta Pathak",
+      course: "FA",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "nishtha@gmail.com",
+      assignmentId: 4,
+    },
+    {
+      name: "Aravind Kumar",
+      course: "C++",
+      progress: 1,
+      enrollDate: "23 Aug, 2022",
+      email: "aravind@gmail.com",
+      assignmentId: 5,
+    },
+    {
+      name: "Anjali Kumari",
+      course: "Python",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "kumrianjali@gmail.com",
+      assignmentId: 6,
+    },
+    {
+      name: "Roshan Jain",
+      course: "MERN",
+      progress: 1,
+      enrollDate: "23 Aug, 2022",
+      email: "roshanjain@gmail.com",
+      assignmentId: 7,
+    },
+    {
+      name: "Ritu Jain",
+      course: "Java",
+      progress: 0.15,
+      enrollDate: "23 Aug, 2022",
+      email: "ritujain@gmail.com",
+      assignmentId: 0,
+    },
+  ];
+};
 
-const Assignment = () => {
-  const { course } = useParams();
-  const navigate = useNavigate();
-  const [submissions, setSubmissions] = useState();
-  const courses = useMemo(
-    () => ["UI/UX", "Python", "MERN", "Photoshop", "FA", "C++", "Java"],
-    []
-  );
-
-  useEffect(() => {
-    if (!courses.includes(decodeURIComponent(course))) {
-      navigate("/");
-    } else {
-      fetchCourseSubmissions().then((subs) => {
-        setSubmissions(subs.data);
-      });
-    }
-  }, [courses, navigate, course]);
-
-  const fet = {
+export const fetchCourseSubmissions = async (course) => {
+  return {
     success: true,
     data: [
       {
@@ -151,117 +211,16 @@ const Assignment = () => {
       },
     ],
   };
-
-  const data = submissions;
-  const newAssignment = 51;
-  const unreviewed = 68;
-
-  let count = 0;
-  return data ? (
-    <div>
-      <div className={styles.header}>
-        <div className={styles.left}>
-          <div>Courses &gt; {decodeURIComponent(course)}</div>
-          <div className={styles.data}>
-            <select>
-              <option>26 Aug, 2022</option>
-            </select>
-            <div className={styles.header_info}>
-              <div>
-                <span>New Assignment</span>
-                <span>{newAssignment}</span>
-              </div>
-              <div>
-                <span>Unreviewed</span>
-                <span>{unreviewed}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.right}>
-          <select
-            onChange={(e) => {
-              if (e.target.value === "") navigate("/", { relative: false });
-
-              navigate(`/${encodeURIComponent(e.target.value)}`);
-            }}
-            value={course}
-          >
-            <option value="">Select Course</option>
-            {courses.map((course, i) => (
-              <option key={i} value={course}>
-                {course}
-              </option>
-            ))}
-          </select>
-          <select>
-            <option>Sort By: Latest First</option>
-          </select>
-        </div>
-      </div>
-      <div className={styles.submissions}>
-        {data.map((assignment, i) =>
-          assignment.questions.map((ques, j) =>
-            ques.submissions.map((subm, k) => (
-              <SubmissionView
-                key={i + j + k}
-                data={{
-                  number: ++count,
-                  time: "11:15 AM",
-                  userInfo: {
-                    profilePic: "",
-                    name: assignment.student_name,
-                    course: assignment.course,
-                  },
-                  details: {
-                    topicName: assignment.topic_name,
-                    question: ques.question,
-                    text: ques.instructions,
-                  },
-                  solution: {
-                    filename: subm.filename,
-                    filelink: subm.filelink,
-                    linkText: subm.linkText,
-                    link: subm.link,
-                    text: subm.text,
-                  },
-                }}
-              />
-            ))
-          )
-        )}
-        {/* {data.questions.map((ques) =>
-          ques.submissions.map((subm) => (
-            <SubmissionView
-              data={{
-                number: ++count,
-                time: "11:15 AM",
-                userInfo: {
-                  profilePic: "",
-                  name: data.student_name,
-                  course: data.course,
-                },
-                details: {
-                  topicName: data.topic_name,
-                  question: ques.question,
-                  text: ques.instructions,
-                },
-                solution: {
-                  filename: subm.filename,
-                  filelink: subm.filelink,
-                  linkText: subm.linkText,
-                  link: subm.link,
-                  text: subm.text,
-                },
-              }}
-            />
-          ))
-        )} */}
-      </div>
-    </div>
-  ) : (
-    "Loading..."
-  );
 };
 
-export default Assignment;
+export const filterCourses = (submissions) => {
+  const courses = [];
+
+  submissions.forEach((sub) => {
+    if (!courses.includes(sub.course)) {
+      courses.push(sub.course);
+    }
+  });
+
+  return courses;
+};

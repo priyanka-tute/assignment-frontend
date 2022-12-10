@@ -14,10 +14,9 @@ function App() {
     <RouterProvider
       router={createBrowserRouter(
         createRoutesFromElements(
-          <Route path="/" element={<Layout />} errorElement={<ErrorPage />}>
-            <Route path="" element={<Home />} />
-            <Route path=":course" element={<Assignment />} />
-            {/* <Route path="courses/:course" element={<Assignment />} /> */}
+          <Route path="" element={<Layout />} errorElement={<ErrorPage />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/:course" element={<Assignment />} />
           </Route>
         )
       )}

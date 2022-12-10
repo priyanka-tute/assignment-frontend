@@ -77,7 +77,7 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
       >
         <h5>Feedback for Assignment 1</h5>
         <div className={styles.feedback_cont}>
-          Ask Student for Re-submission of this Assignment ?{" "}
+          <span>Ask Student for Re-submission of this Assignment ?</span>
           <div>
             <button
               className={styles.yes}
