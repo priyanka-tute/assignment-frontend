@@ -99,7 +99,7 @@ export const fetchCourseSubmissions = async (course) => {
             question_no: 1,
             instructions:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec condimentum porttitor arcu augue a quam ullamcorper vestibulum volutpat. Nulla sed sed vestibulum, nibh quisque. Sit risus massa ipsum nulla commodo sit. Tortor blandit ut lacus lectus. Fermentum vitae amet tristique morbi praesent tristique. Id purus elementum nisl pretium tellus diam, scelerisque. Egestas tortor et posuere aliquet elit, feugiat cras velit viverra. Posuere neque habitasse elit tristique rutrum pellentesque lectus. Justo porttitor enim, consequat nec luctus. Cursus vulputate a ut convallis. Elementum metus, amet malesuada eget.",
-            status: "submitted",
+            status: "completed",
             submissions: [
               {
                 attempt: 1,
@@ -113,6 +113,16 @@ export const fetchCourseSubmissions = async (course) => {
                 _id: "633d763f2c3f1e2b0b9ada88",
                 addDate: "2022-10-05T12:19:11.855Z",
                 updatedAt: "2022-10-05T14:22:43.727Z",
+                review:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pretium interdum porta egestas vitae vel. Nec phasellus orci pretium vulputate mi amet, fringilla. Tellus, diam, quis nunc, morbi ullamcorper ut eros, nunc. Magna eget placerat ut cum elementum.",
+                reviewLinkText: [
+                  "this is a link attached by mentor, it will open on clicking",
+                  "This is another link",
+                ],
+                reviewLinks: ["https://google.com", "https://tutedude.com"],
+                reviewFiles: ["https://google.com", "https://tutedude.com"],
+                reviewFileText: ["filename1.ext", "filename2.ext"],
+                reviewDate: "14-09-22",
               },
               {
                 attempt: 2,
