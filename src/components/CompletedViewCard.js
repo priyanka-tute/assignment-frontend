@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "../styles/SubmissionView.module.css";
 import FeedbackModal from "./FeedbackModal";
-import Modal from "./Modal";
+// import Modal from "./Modal";
 
 const CompletedViewCard = ({ data }) => {
-  const [showTextSolution, setShowTextSolution] = useState(false);
-  const [currentTextSolution, setCurrentTextSolution] = useState();
+  // const [showTextSolution, setShowTextSolution] = useState(false);
+  // const [currentTextSolution, _] = useState();
 
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   // const [currentFeedback, setFeedbackForm] = useState();
@@ -15,9 +15,9 @@ const CompletedViewCard = ({ data }) => {
   //   setShowTextSolution(true);
   // };
 
-  const closeHandler = () => {
-    setShowTextSolution(false);
-  };
+  // const closeHandler = () => {
+  //   setShowTextSolution(false);
+  // };
 
   return (
     <div className={`${styles.root} ${styles.completed}`}>
@@ -122,9 +122,6 @@ const CompletedViewCard = ({ data }) => {
           </div>
         </div>
       </div>
-      <Modal shown={showTextSolution} closeHandler={closeHandler}>
-        {currentTextSolution}
-      </Modal>
       <FeedbackModal
         showFeedbackForm={showFeedbackForm}
         closeHandler={() => {
