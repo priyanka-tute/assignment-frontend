@@ -10,10 +10,10 @@ const CompletedViewCard = ({ data }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   // const [currentFeedback, setFeedbackForm] = useState();
 
-  const textSolutionClickHandler = (current) => {
-    setCurrentTextSolution(current);
-    setShowTextSolution(true);
-  };
+  // const textSolutionClickHandler = (current) => {
+  //   setCurrentTextSolution(current);
+  //   setShowTextSolution(true);
+  // };
 
   const closeHandler = () => {
     setShowTextSolution(false);
