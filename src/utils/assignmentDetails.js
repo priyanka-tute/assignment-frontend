@@ -84,6 +84,14 @@ export const fetchSubmissions = async () => {
 };
 
 export const fetchCourseSubmissions = async (course) => {
+  const res = await fetch(
+    "https://tutedude-assignment.onrender.com/mentor/submission/subject?subject_id=1"
+  );
+  const data = await res.json();
+  // console.log(data);
+  return data;
+
+  /*
   return {
     success: true,
     data: [
@@ -221,6 +229,7 @@ export const fetchCourseSubmissions = async (course) => {
       },
     ],
   };
+  */
 };
 
 export const filterCourses = (submissions) => {
@@ -233,4 +242,43 @@ export const filterCourses = (submissions) => {
   });
 
   return courses;
+};
+
+export const fetchAssignments = async () => {
+  return [
+    {
+      course: "UI/UX",
+      uploadedBy: "",
+      uploadDate: "",
+    },
+    {
+      course: "UI/UX",
+      uploadedBy: "",
+      uploadDate: "",
+    },
+    {
+      course: "UI/UX",
+      uploadedBy: "",
+      uploadDate: "",
+    },
+    {
+      course: "UI/UX",
+      uploadedBy: "",
+      uploadDate: "",
+    },
+    {
+      course: "UI/UX",
+      uploadedBy: "",
+      uploadDate: "",
+    },
+    {
+      course: "UI/UX",
+      uploadedBy: "",
+      uploadDate: "",
+    },
+  ];
+};
+
+export const getAllCourses = () => {
+  return ["UI/UX", "Python", "MERN", "Photoshop", "FA", "C++", "Java"];
 };

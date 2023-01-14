@@ -1,0 +1,30 @@
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat {
+  background-color: #dadada;
+  color: black;
+  width: 300px;
+  border-radius: 20px;
+  padding: 0.8rem 1rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat p {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 123.5%;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+
+.stat h3 {
+  color: #575757;
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 123.5%;
+  text-align: right;
+}

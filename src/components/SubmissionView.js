@@ -156,6 +156,7 @@ const SubmissionView = ({ data }) => {
         closeHandler={() => {
           setShowFeedbackForm(false);
         }}
+        data={{ ...data.ids, question: data.details.question }}
       />
     </div>
   );

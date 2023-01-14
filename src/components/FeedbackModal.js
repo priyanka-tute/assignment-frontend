@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import styles from "../styles/Modal.module.css";
 
-const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
+const FeedbackModal = ({ showFeedbackForm, closeHandler, data }) => {
   const [files, setFiles] = useState([]);
   const [links, setLinks] = useState([]);
   const [text, setText] = useState("");
   // const [full, setFull] = useState([]);
 
+  const [loading, setLoading] = useState(false);
   const defaultLink = { text: "", link: "", ind: -1 };
   const [currLink, setCurrLink] = useState({ text: "", link: "", ind: -1 });
 
@@ -18,14 +19,14 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
       return window.alert("No Feedback given");
     }
     if (window.confirm("Are you sure to submit?")) {
-      console.log({
-        text: text,
-        files: files,
-        links: links,
-      });
-      setLinks([]);
-      setFiles([]);
-      setText("");
+      // console.log({
+      //   text: text,
+      //   files: files,
+      //   links: links,
+      // });
+      // setLinks([]);
+      // setFiles([]);
+      // setText("");
       setShowResub(true);
     }
   };
@@ -36,6 +37,73 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
 
   const [showResub, setShowResub] = useState(false);
   const [reSubmit, setReSubmit] = useState(undefined);
+  // console.log(data.assignmentId);
+
+  const sendFeedback = (resubmit) => {
+    const formData = new FormData();
+
+    formData.append("assignment_id", data.assignmentId);
+    formData.append("student_id", data.studentId);
+    formData.append("subject_id", data.subjectId);
+    formData.append("submission_id", data.submissionId);
+    formData.append("question_no", data.questionNo);
+    formData.append("question", data.question);
+    formData.append("sid", data.submissionId);
+    formData.append("list_id", data.listId);
+
+    console.log({
+      assignment_id: data.assignmentId,
+      student_id: data.studentId,
+      subject_id: data.subjectId,
+      submission_id: data.submissionId,
+      question_no: data.questionNo,
+      question: data.question,
+      list_id: data.listId,
+    });
+    files.forEach((file, i) => {
+      formData.append(data.submissionId + "_" + i, file);
+    });
+
+    links.forEach((link) => {
+      formData.append("link", link.link);
+      formData.append("linkText", link.text);
+    });
+
+    formData.append("text", text);
+    formData.append("resubmit", resubmit);
+
+    setLoading(true);
+    fetch(
+      "https://tutedude-assignment.onrender.com/mentor/submission/feedback",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setLoading(false);
+        if (data.success === true) {
+          setReSubmit(resubmit);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  if (loading)
+    return (
+      <Modal
+        shown={showFeedbackForm}
+        closeHandler={() => {
+          closeHandler();
+        }}
+      >
+        Loading
+      </Modal>
+    );
 
   if (reSubmit === true) {
     return (
@@ -82,14 +150,14 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
             <button
               className={styles.yes}
               onClick={() => {
-                setReSubmit(true);
+                sendFeedback(true);
               }}
             >
               Yes
             </button>{" "}
             <button
               onClick={() => {
-                setReSubmit(false);
+                sendFeedback(false);
               }}
             >
               No
@@ -119,7 +187,7 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler }) => {
         </div>
         <div className={styles.links}>
           {links.map((link, ind) => (
-            <div className={styles.link}>
+            <div className={styles.link} key={ind}>
               {link.text}
               <div>
                 <a href={link.link} target="_blank" rel="noreferrer">

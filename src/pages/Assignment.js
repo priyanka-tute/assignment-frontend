@@ -3,26 +3,54 @@ import { useNavigate, useParams } from "react-router";
 import CompletedViewCard from "../components/CompletedViewCard";
 import SubmissionView from "../components/SubmissionView";
 import styles from "../styles/Assignment.module.css";
-import { fetchCourseSubmissions } from "../utils/assignmentDetails";
+import {
+  fetchCourseSubmissions,
+  getAllCourses,
+} from "../utils/assignmentDetails";
 
 const Assignment = () => {
   const { course } = useParams();
   const navigate = useNavigate();
   const [submissions, setSubmissions] = useState();
-  const courses = useMemo(
-    () => ["UI/UX", "Python", "MERN", "Photoshop", "FA", "C++", "Java"],
-    []
-  );
+  const [fetchedSubmissions, setFetchSubmissions] = useState();
+  const courseId = parseInt(course);
+  const courses = useMemo(() => getAllCourses(), []);
+  const courseName = courses[courseId];
+  const [date, setDate] = useState("");
+  const [dates, setDates] = useState([]);
+
+  // console.log(course);
 
   useEffect(() => {
-    if (!courses.includes(decodeURIComponent(course))) {
+    if (courseId >= courses.length) {
       navigate("/");
     } else {
       fetchCourseSubmissions().then((subs) => {
-        setSubmissions(subs.data);
+        setFetchSubmissions(subs.data);
       });
     }
-  }, [courses, navigate, course]);
+  }, [courses, navigate, courseId]);
+
+  useEffect(() => {
+    if (!fetchedSubmissions) return;
+    let temp = [];
+    fetchedSubmissions.forEach((sub) => {
+      // console.log(sub.question.updatedAt);
+      const d = new Date(sub.question.updatedAt);
+      if (!temp.includes(d.toDateString())) temp.push(d.toDateString());
+    });
+    setDates(temp);
+  }, [fetchedSubmissions]);
+
+  useEffect(() => {
+    const temp = date
+      ? fetchedSubmissions.filter((sub) => {
+          return new Date(sub.question.updatedAt).toDateString() === date;
+        })
+      : fetchedSubmissions;
+    // console.log(temp);
+    setSubmissions(temp);
+  }, [fetchedSubmissions, date]);
 
   // const fet = {
   //   success: true,
@@ -162,11 +190,26 @@ const Assignment = () => {
       <div className={styles.header}>
         <div className={styles.left}>
           <div>
-            <a href="/">Courses</a> &gt; {decodeURIComponent(course)}
+            <a href="/">Courses</a> &gt; {courses[courseId]}
           </div>
           <div className={styles.data}>
-            <select>
-              <option>26 Aug, 2022</option>
+            <select
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+              }}
+            >
+              <option value={""}>Select date</option>
+              {dates.map((date, i) => {
+                const d = new Date(date);
+                // console.log(date);
+                return (
+                  <option
+                    key={i}
+                    value={date}
+                  >{`${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`}</option>
+                );
+              })}
             </select>
             <div className={styles.header_info}>
               <div>
@@ -191,7 +234,7 @@ const Assignment = () => {
           >
             <option value="">Select Course</option>
             {courses.map((course, i) => (
-              <option key={i} value={course}>
+              <option key={i} value={i}>
                 {course}
               </option>
             ))}
@@ -202,31 +245,45 @@ const Assignment = () => {
         </div>
       </div>
       <div className={styles.submissions}>
-        {data.map((assignment, i) =>
-          assignment.questions.map((ques, j) =>
-            ques.submissions.map((subm, k) =>
-              ques.status === "completed" && subm.review ? (
+        {data.map(
+          (ques, i) =>
+            // assignment.questions.map((ques, j) =>
+            ques.submissions.map((subm, k) => {
+              const d = new Date(subm.updatedAt);
+              return ques.status === "completed" && subm.review ? (
                 <CompletedViewCard
+                  key={i + k}
                   data={{
+                    ids: {
+                      assignmentId: ques.assignment_id,
+                      subjectId: ques.subject_id,
+                      submissionId: ques._id,
+                      studentId: ques.student_id,
+                      questionNo: ques.question.question_no,
+                    },
                     number: ++count,
-                    time: "11:15 AM",
+                    time: `${d.getHours()}:${d.getMinutes()}`,
                     review: {
-                      date: subm.reviewDate,
-                      message: subm.review,
-                      filename: subm.reviewFileText,
-                      filelink: subm.reviewFiles,
-                      linkText: subm.reviewLinkText,
-                      link: subm.reviewLinks,
+                      date: subm.review.reviewDate,
+                      message: subm.review.text,
+                      filename: subm.review.filename,
+                      filelink: subm.review.filelink,
+                      linkText: subm.review.linkText,
+                      link: subm.review.link,
                     },
                     userInfo: {
                       profilePic: "",
-                      name: assignment.student_name,
-                      course: assignment.course,
+                      name: ques.student_name
+                        ? ques.student_name
+                        : "Not returned",
+                      course: courseName,
                     },
                     details: {
-                      topicName: assignment.topic_name,
-                      question: ques.question,
-                      text: ques.instructions,
+                      topicName: ques.topic_name
+                        ? ques.topic_name
+                        : "Not returned",
+                      question: ques.question.question,
+                      text: ques.question.instructions,
                     },
                     solution: {
                       filename: subm.filename,
@@ -239,19 +296,30 @@ const Assignment = () => {
                 />
               ) : (
                 <SubmissionView
-                  key={i + j + k}
+                  key={i + k}
                   data={{
+                    ids: {
+                      assignmentId: ques.assignment_id,
+                      subjectId: ques.subject_id,
+                      submissionId: ques._id,
+                      studentId: ques.student_id,
+                      questionNo: ques.question.question_no,
+                      listId: subm._id,
+                    },
                     number: ++count,
-                    time: "11:15 AM",
+                    time: `${d.getHours()}:${d.getMinutes()}`,
                     userInfo: {
                       profilePic: "",
-                      name: assignment.student_name,
-                      course: assignment.course,
+                      name: ques.student_name
+                        ? ques.student_name
+                        : "Not returned",
+                      course: courseName,
                     },
                     details: {
-                      topicName: assignment.topic_name,
-                      question: ques.question,
-                      text: ques.instructions,
+                      // topicName: assignment.topic_name,
+                      topicName: "Not returned",
+                      question: ques.question.question,
+                      text: ques.question.instructions,
                     },
                     solution: {
                       filename: subm.filename,
@@ -262,9 +330,9 @@ const Assignment = () => {
                     },
                   }}
                 />
-              )
-            )
-          )
+              );
+            })
+          // )
         )}
         {/* {data.questions.map((ques) =>
           ques.submissions.map((subm) => (

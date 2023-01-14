@@ -10,16 +10,17 @@
 button,
 .btn {
   padding: 8px 16px;
-  background: #800080;
-  border-radius: 20px;
+  background: #a0a0a0;
+  border-radius: 10px;
   border: none;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  color: #ffffff;
+  color: #000;
   cursor: pointer;
   text-decoration: none;
   width: fit-content;
+  padding: 0.8rem 1rem;
 }
 
 h3 {
@@ -35,7 +36,7 @@ a {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  color: #800080;
+  color: #000000;
 }
 
 h4 {

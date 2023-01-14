@@ -11,10 +11,18 @@ const Navbar = () => {
       <img className={styles.logo} src={"/logo.png"} alt="TuteDude" />
       <div className={styles.nav}>
         <div className={styles.links}>
-          <Link to="" className={path.includes("/") ? styles.active : ""}>
+          <Link
+            to=""
+            className={!path.includes("/assignments") ? styles.active : ""}
+          >
             Assignment Received
           </Link>
-          <Link to="">Assignment Library</Link>
+          <Link
+            to="/assignments"
+            className={path.includes("/assignments") ? styles.active : ""}
+          >
+            Assignment Library
+          </Link>
         </div>
         <div className={styles.profile}>
           <svg

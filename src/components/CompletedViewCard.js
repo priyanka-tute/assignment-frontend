@@ -127,6 +127,14 @@ const CompletedViewCard = ({ data }) => {
         closeHandler={() => {
           setShowFeedbackForm(false);
         }}
+        data={{
+          assignmentId: 123,
+          studentId: 12,
+          subjectId: 1,
+          questionNo: 1,
+          question: "abc",
+          submissionId: 4,
+        }}
       />
     </div>
   );

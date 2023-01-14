@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "../styles/Home.module.css";
-import { fetchSubmissions, filterCourses } from "../utils/assignmentDetails";
+import { fetchSubmissions, getAllCourses } from "../utils/assignmentDetails";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Home = () => {
     fetchSubmissions().then((subs) => {
       setSubmissions(subs);
     });
-  });
+  }, []);
 
   return submissions ? (
     <div>
@@ -29,8 +29,8 @@ const Home = () => {
           }}
         >
           <option value="">Select Course</option>
-          {filterCourses(submissions).map((course, ind) => (
-            <option key={ind} value={encodeURIComponent(course)}>
+          {getAllCourses().map((course, ind) => (
+            <option key={ind} value={ind}>
               {course}
             </option>
           ))}
