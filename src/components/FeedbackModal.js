@@ -51,22 +51,33 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler, data }) => {
     formData.append("sid", data.submissionId);
     formData.append("list_id", data.listId);
 
-    console.log({
-      assignment_id: data.assignmentId,
-      student_id: data.studentId,
-      subject_id: data.subjectId,
-      submission_id: data.submissionId,
-      question_no: data.questionNo,
-      question: data.question,
-      list_id: data.listId,
-    });
+    // console.log({
+    //   assignment_id: data.assignmentId,
+    //   student_id: data.studentId,
+    //   subject_id: data.subjectId,
+    //   submission_id: data.submissionId,
+    //   question_no: data.questionNo,
+    //   question: data.question,
+    //   list_id: data.listId,
+    // });
+
+    const file_aid = 123,
+      link_aid = 456,
+      ltd_aid = 789;
+
+    formData.append("file_n", files.length);
     files.forEach((file, i) => {
-      formData.append(data.submissionId + "_" + i, file);
+      formData.append(file_aid + "_" + i, file);
+      // console.log({ key: file_aid + "_" + i, value: file });
     });
 
-    links.forEach((link) => {
-      formData.append("link", link.link);
-      formData.append("linkText", link.text);
+    formData.append("link_n", links.length);
+    formData.append("ltd_n", links.length);
+    links.forEach((link, i) => {
+      formData.append(link_aid + "_" + i, link.link);
+      formData.append(ltd_aid + "_" + i, link.text);
+      // console.log({ key: link_aid + "_" + i, value: link.link });
+      // console.log({ key: ltd_aid + "_" + i, value: link.text });
     });
 
     formData.append("text", text);
