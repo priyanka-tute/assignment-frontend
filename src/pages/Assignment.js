@@ -245,8 +245,8 @@ const Assignment = () => {
         </div>
       </div>
       <div className={styles.submissions}>
-        {data.map(
-          (ques, i) =>
+        {data.map((ques, i) => {
+          return (
             // assignment.questions.map((ques, j) =>
             ques.submissions.map((subm, k) => {
               const d = new Date(subm.updatedAt);
@@ -275,13 +275,13 @@ const Assignment = () => {
                       profilePic: "",
                       name: ques.student_name
                         ? ques.student_name
-                        : "Not returned",
+                        : ques.student_id,
                       course: courseName,
                     },
                     details: {
-                      topicName: ques.topic_name
-                        ? ques.topic_name
-                        : "Not returned",
+                      topicName: ques.assignment_id.topic
+                        ? ques.assignment_id.topic
+                        : "",
                       question: ques.question.question,
                       text: ques.question.instructions,
                     },
@@ -312,12 +312,12 @@ const Assignment = () => {
                       profilePic: "",
                       name: ques.student_name
                         ? ques.student_name
-                        : "Not returned",
+                        : ques.student_id,
                       course: courseName,
                     },
                     details: {
                       // topicName: assignment.topic_name,
-                      topicName: "Not returned",
+                      topicName: ques.assignment_id.topic,
                       question: ques.question.question,
                       text: ques.question.instructions,
                     },
@@ -332,8 +332,9 @@ const Assignment = () => {
                 />
               );
             })
-          // )
-        )}
+            // )
+          );
+        })}
         {/* {data.questions.map((ques) =>
           ques.submissions.map((subm) => (
             <SubmissionView

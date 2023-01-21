@@ -65,14 +65,19 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler, data }) => {
       link_aid = 456,
       ltd_aid = 789;
 
-    formData.append("file_n", files.length);
+    formData.append("aid", file_aid);
+    formData.append("link_aid", link_aid);
+    formData.append("ltd_aid", ltd_aid);
+
+    formData.append("n", files.length);
+    formData.append("link_n", links.length);
+    formData.append("ltd_n", links.length);
+
     files.forEach((file, i) => {
       formData.append(file_aid + "_" + i, file);
       // console.log({ key: file_aid + "_" + i, value: file });
     });
 
-    formData.append("link_n", links.length);
-    formData.append("ltd_n", links.length);
     links.forEach((link, i) => {
       formData.append(link_aid + "_" + i, link.link);
       formData.append(ltd_aid + "_" + i, link.text);

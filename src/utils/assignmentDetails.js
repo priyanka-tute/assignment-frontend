@@ -85,10 +85,10 @@ export const fetchSubmissions = async () => {
 
 export const fetchCourseSubmissions = async (course) => {
   const res = await fetch(
-    "https://tutedude-assignment.onrender.com/mentor/submission/subject?subject_id=1"
+    "https://tutedude-assignment.onrender.com/mentor/submission?subject_id=63cac188c796cfd9126be950"
   );
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
   return data;
 
   /*
@@ -101,8 +101,10 @@ export const fetchCourseSubmissions = async (course) => {
         subject_id: 1,
         course: "UI/UX",
         student_name: "Arvind Kumar",
-        questions: [
+        updatedAt: "2022-10-05T14:22:43.727Z",
+        question: [
           {
+            updatedAt: "2022-10-05T14:22:43.727Z",
             question: "ABC",
             question_no: 1,
             instructions:
@@ -149,6 +151,7 @@ export const fetchCourseSubmissions = async (course) => {
             submission_id: "633d763f2c3f1e2b0b9ada86",
           },
           {
+            updatedAt: "2022-10-05T14:22:43.727Z",
             question: "WAP to print multiples of 6",
             question_no: 2,
             status: "completed",
@@ -188,8 +191,10 @@ export const fetchCourseSubmissions = async (course) => {
         subject_id: 1,
         course: "UI/UX",
         student_name: "Sumit Agarwal",
-        questions: [
+        updatedAt: "2022-10-05T14:22:43.727Z",
+        question: [
           {
+            updatedAt: "2022-10-05T14:22:43.727Z",
             question: "This is another question",
             question_no: 1,
             instructions:
