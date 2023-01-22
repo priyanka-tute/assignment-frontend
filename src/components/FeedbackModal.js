@@ -89,13 +89,10 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler, data }) => {
     formData.append("resubmit", resubmit);
 
     setLoading(true);
-    fetch(
-      "https://tutedude-assignment.onrender.com/mentor/submission/feedback",
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
+    fetch(process.env.REACT_APP_API_URL + "/mentor/submission/feedback", {
+      method: "POST",
+      body: formData,
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
