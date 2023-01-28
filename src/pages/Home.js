@@ -25,7 +25,7 @@ const Home = () => {
           onChange={(e) => {
             if (e.target.value === "") return;
 
-            navigate(`/${e.target.value}`);
+            navigate(`/mentor/${e.target.value}`);
           }}
         >
           <option value="">Select Course</option>

@@ -12,13 +12,13 @@ const Navbar = () => {
       <div className={styles.nav}>
         <div className={styles.links}>
           <Link
-            to=""
+            to="mentor"
             className={!path.includes("/assignments") ? styles.active : ""}
           >
             Assignment Received
           </Link>
           <Link
-            to="/assignments"
+            to="mentor/assignments"
             className={path.includes("/assignments") ? styles.active : ""}
           >
             Assignment Library
