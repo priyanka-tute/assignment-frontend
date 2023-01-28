@@ -86,10 +86,7 @@ export const fetchSubmissions = async () => {
 export const fetchCourseSubmissions = async (course) => {
   const res = await fetch(
     process.env.REACT_APP_API_URL +
-      "/mentor/submission?subject_id=63cac188c796cfd9126be950",
-    {
-      mode: "no-cors",
-    }
+      "/mentor/submission?subject_id=63cac188c796cfd9126be950"
   );
   const data = await res.json();
   console.log(data);
