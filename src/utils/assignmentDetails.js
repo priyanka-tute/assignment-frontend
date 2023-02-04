@@ -84,13 +84,18 @@ export const fetchSubmissions = async () => {
 };
 
 export const fetchCourseSubmissions = async (course) => {
-  const res = await fetch(
-    process.env.REACT_APP_API_URL +
-      "/mentor/submission?subject_id=63cac188c796cfd9126be950"
-  );
-  const data = await res.json();
-  console.log(data);
-  return data;
+  try {
+    const res = await fetch(
+      process.env.REACT_APP_API_URL +
+        "/mentor/submission?subject_id=63cac188c796cfd9126be950"
+    );
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
 
   /*
   return {
@@ -236,6 +241,212 @@ export const fetchCourseSubmissions = async (course) => {
     ],
   };
   */
+};
+
+export const fetchUnrevSubmissions = async (course) => {
+  try {
+    const res = await fetch(
+      process.env.REACT_APP_API_URL +
+        "https://api.tutedude.com/assignment/mentor/submission/pending"
+    );
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return {
+      success: true,
+      data: [
+        {
+          _id: "63ca86558c04cb08393152f6",
+          student_id: "test@gmail.com",
+          assignment_id: {
+            _id: "63ca7d70c35d683bc1157037",
+            subject_id: "63cac188c796cfd9126be950",
+            questions: [
+              {
+                question_no: 1,
+                question: "WAP to check if the number is prime",
+                addedBy: "63ca7bf9c796cfd9126be94e",
+                _id: "63ca7d70c35d683bc1157038",
+                addDate: "2023-01-20T11:39:28.345Z",
+                updatedAt: "2023-01-20T11:39:28.345Z",
+              },
+              {
+                question_no: 2,
+                question: "WAP to check if the number is even",
+                addedBy: "63ca7bf9c796cfd9126be94e",
+                _id: "63ca7d70c35d683bc1157039",
+                addDate: "2023-01-20T11:39:28.346Z",
+                updatedAt: "2023-01-20T11:39:28.346Z",
+              },
+            ],
+            topic: "Topic",
+            addedBy: "63ca7bf9c796cfd9126be94e",
+            addDate: "2023-01-20T11:39:28.347Z",
+            updatedAt: "2023-01-20T11:39:28.347Z",
+            __v: 0,
+          },
+          subject_id: "63cac188c796cfd9126be950",
+          question: {
+            question_no: 1,
+            question: "WAP to check if the number is prime",
+            _id: "63ca86558c04cb08393152f7",
+            addDate: "2023-01-20T12:17:25.894Z",
+            updatedAt: "2023-01-20T12:17:25.894Z",
+          },
+          status: "resubmit",
+          submissions: [
+            {
+              attempt: 3,
+              filelink: [],
+              filename: [],
+              filecloudlinks: [],
+              link: [],
+              text: "another submission",
+              linkText: [],
+              review: {
+                filelink: [],
+                filename: [],
+                filecloudlinks: [],
+                link: [],
+                text: "demo statement",
+                linkText: [],
+                _id: "63da4caab118d71f3d2ba7b1",
+              },
+              reviewDate: "2023-02-01T11:27:38.909Z",
+              _id: "63ca9918ac7c7e39e7f244c2",
+              updatedAt: "2023-02-01T11:27:38.910Z",
+              addDate: "2023-02-01T11:27:38.910Z",
+            },
+          ],
+          __v: 0,
+          student_name: "test",
+        },
+        {
+          _id: "63d9e27cb118d71f3d2ba713",
+          student_id: "demo@tutedude.com",
+          assignment_id: {
+            _id: "63ca7d70c35d683bc1157037",
+            subject_id: "63cac188c796cfd9126be950",
+            questions: [
+              {
+                question_no: 1,
+                question: "WAP to check if the number is prime",
+                addedBy: "63ca7bf9c796cfd9126be94e",
+                _id: "63ca7d70c35d683bc1157038",
+                addDate: "2023-01-20T11:39:28.345Z",
+                updatedAt: "2023-01-20T11:39:28.345Z",
+              },
+              {
+                question_no: 2,
+                question: "WAP to check if the number is even",
+                addedBy: "63ca7bf9c796cfd9126be94e",
+                _id: "63ca7d70c35d683bc1157039",
+                addDate: "2023-01-20T11:39:28.346Z",
+                updatedAt: "2023-01-20T11:39:28.346Z",
+              },
+            ],
+            topic: "Topic",
+            addedBy: "63ca7bf9c796cfd9126be94e",
+            addDate: "2023-01-20T11:39:28.347Z",
+            updatedAt: "2023-01-20T11:39:28.347Z",
+            __v: 0,
+          },
+          subject_id: "63cac188c796cfd9126be950",
+          question: {
+            question_no: 1,
+            question: "WAP to check if the number is prime",
+            _id: "63d9e27cb118d71f3d2ba714",
+            addDate: "2023-02-01T03:54:36.278Z",
+            updatedAt: "2023-02-01T03:54:36.278Z",
+          },
+          status: "resubmit",
+          submissions: [
+            {
+              attempt: 1,
+              filelink: [],
+              filename: [],
+              filecloudlinks: [],
+              link: [],
+              text: "Text 1",
+              linkText: [],
+              review: {
+                filelink: [],
+                filename: [],
+                filecloudlinks: [],
+                link: [],
+                text: "Retry",
+                linkText: [],
+                _id: "63d9e2cfb118d71f3d2ba731",
+              },
+              reviewDate: "2023-02-01T03:55:59.238Z",
+              _id: "63d9e27cb118d71f3d2ba715",
+              updatedAt: "2023-02-01T03:55:59.240Z",
+              addDate: "2023-02-01T03:55:59.240Z",
+            },
+          ],
+          __v: 0,
+          student_name: "Demo",
+        },
+        {
+          _id: "63dbff12b118d71f3d2ba7fd",
+          student_id: "test@gmail.com",
+          assignment_id: {
+            _id: "63ca7d70c35d683bc1157037",
+            subject_id: "63cac188c796cfd9126be950",
+            questions: [
+              {
+                question_no: 1,
+                question: "WAP to check if the number is prime",
+                addedBy: "63ca7bf9c796cfd9126be94e",
+                _id: "63ca7d70c35d683bc1157038",
+                addDate: "2023-01-20T11:39:28.345Z",
+                updatedAt: "2023-01-20T11:39:28.345Z",
+              },
+              {
+                question_no: 2,
+                question: "WAP to check if the number is even",
+                addedBy: "63ca7bf9c796cfd9126be94e",
+                _id: "63ca7d70c35d683bc1157039",
+                addDate: "2023-01-20T11:39:28.346Z",
+                updatedAt: "2023-01-20T11:39:28.346Z",
+              },
+            ],
+            topic: "Topic",
+            addedBy: "63ca7bf9c796cfd9126be94e",
+            addDate: "2023-01-20T11:39:28.347Z",
+            updatedAt: "2023-01-20T11:39:28.347Z",
+            __v: 0,
+          },
+          subject_id: "63cac188c796cfd9126be950",
+          question: {
+            question_no: 1,
+            question: "WAP to check if the number is prime",
+            _id: "63dbff12b118d71f3d2ba7fe",
+            addDate: "2023-02-02T18:21:06.568Z",
+            updatedAt: "2023-02-02T18:21:06.568Z",
+          },
+          status: "submitted",
+          submissions: [
+            {
+              attempt: 1,
+              filelink: [],
+              filename: [],
+              filecloudlinks: [],
+              link: [],
+              linkText: [],
+              _id: "63dbff12b118d71f3d2ba7ff",
+              addDate: "2023-02-02T18:21:06.568Z",
+              updatedAt: "2023-02-02T18:21:06.568Z",
+            },
+          ],
+          __v: 0,
+          student_name: "test",
+        },
+      ],
+    };
+  }
 };
 
 export const filterCourses = (submissions) => {

@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import CompletedViewCard from "../components/CompletedViewCard";
 import SubmissionView from "../components/SubmissionView";
 import styles from "../styles/Assignment.module.css";
 import {
   fetchCourseSubmissions,
+  fetchUnrevSubmissions,
   getAllCourses,
 } from "../utils/assignmentDetails";
 
@@ -18,6 +19,9 @@ const Assignment = () => {
   const courseName = courses[courseId];
   const [date, setDate] = useState("");
   const [dates, setDates] = useState([]);
+  const [unrev, setUnrev] = useState(false);
+  let newAss = useRef(0),
+    unrevAss = useRef(0);
 
   // console.log(course);
 
@@ -25,11 +29,18 @@ const Assignment = () => {
     if (courseId >= courses.length) {
       navigate("/");
     } else {
-      fetchCourseSubmissions().then((subs) => {
-        setFetchSubmissions(subs.data);
-      });
+      if (unrev)
+        fetchUnrevSubmissions().then((subs) => {
+          setFetchSubmissions(subs.data);
+          if (subs.data) unrevAss.current = subs.data.length;
+        });
+      else
+        fetchCourseSubmissions().then((subs) => {
+          setFetchSubmissions(subs.data);
+          if (subs.data) newAss.current = subs.data.length;
+        });
     }
-  }, [courses, navigate, courseId]);
+  }, [courses, navigate, courseId, unrev]);
 
   useEffect(() => {
     if (!fetchedSubmissions) return;
@@ -181,8 +192,8 @@ const Assignment = () => {
   // };
 
   const data = submissions;
-  const newAssignment = 51;
-  const unreviewed = 68;
+  const newAssignment = newAss.current;
+  const unreviewed = unrevAss.current;
 
   let count = 0;
   return data ? (
@@ -212,13 +223,23 @@ const Assignment = () => {
               })}
             </select>
             <div className={styles.header_info}>
-              <div>
+              <div
+                className={unrev ? "" : styles.active}
+                onClick={() => {
+                  setUnrev(false);
+                }}
+              >
                 <span>New Assignment</span>
-                <span>{newAssignment}</span>
+                <span>{newAssignment ? newAssignment : ""}</span>
               </div>
-              <div>
+              <div
+                className={unrev ? styles.active : ""}
+                onClick={() => {
+                  setUnrev(true);
+                }}
+              >
                 <span>Unreviewed</span>
-                <span>{unreviewed}</span>
+                <span>{unreviewed ? unreviewed : ""}</span>
               </div>
             </div>
           </div>

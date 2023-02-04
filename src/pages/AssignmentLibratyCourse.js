@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { fetchAssignments, getAllCourses } from "../utils/assignmentDetails";
 import styles from "../styles/AssignmentLibrary.module.css";
 import CreateAss from "../components/assignment/CreateAss";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
-const AssignmentLibrary = () => {
+const AssignmentLibratyCourse = () => {
+  const { course } = useParams();
+  const navigate = useNavigate();
+
   const [assignments, setAssignments] = useState();
   const [showCreate, setShowCreate] = useState(false);
-  const navigate = useNavigate();
 
   const courses = getAllCourses();
 
@@ -17,13 +19,18 @@ const AssignmentLibrary = () => {
     });
   }, []);
 
+  console.log(course);
+
   return assignments ? (
     <div>
       <div className={styles.top}>
         <select
+          value={course}
           onChange={(e) => {
             if (e.target.value > -1) {
               navigate("/mentor/assignments/" + e.target.value);
+            } else {
+              navigate("/mentor/assignments");
             }
           }}
         >
@@ -81,4 +88,4 @@ const AssignmentLibrary = () => {
   );
 };
 
-export default AssignmentLibrary;
+export default AssignmentLibratyCourse;

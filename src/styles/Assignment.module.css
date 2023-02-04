@@ -23,7 +23,6 @@
 }
 
 .header_info div {
-  background: #dfdfdf;
   padding: 1.3rem 1rem;
   border-radius: 20px;
   display: flex;
@@ -33,11 +32,18 @@
   line-height: 123.5%;
   align-items: center;
   justify-content: space-between;
+  background: transparent;
+  border: 2px solid black;
+  transition: 0.24s;
+  cursor: pointer;
+}
+
+.header_info div.active {
+  background: #dfdfdf;
+  border: 2px solid #dfdfdf;
 }
 
 .data div + div {
-  background: none;
-  border: 2px solid black;
 }
 
 .data div span + span {
