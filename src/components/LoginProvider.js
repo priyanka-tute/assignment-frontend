@@ -9,9 +9,13 @@ const LoginProvider = ({ children }) => {
   const url = "http://api.tutedude.com/assignment/mentor/login";
 
   const onLogin = (email, password) => {
-    fetch(url + `?email=${email}&password=${password}`, {
+    fetch(url, {
       method: "POST",
       mode: "no-cors",
+      body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
