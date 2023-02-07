@@ -11,7 +11,7 @@ const LoginProvider = ({ children }) => {
   const onLogin = (email, password) => {
     fetch(url, {
       method: "POST",
-      mode: "no-cors",
+      // mode: "no-cors",
       body: JSON.stringify({
             email: email,
             password: password,
