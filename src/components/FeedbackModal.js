@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import styles from "../styles/Modal.module.css";
+import Cookies from "js-cookie";
 
 const FeedbackModal = ({ showFeedbackForm, closeHandler, data }) => {
   const [files, setFiles] = useState([]);
@@ -42,6 +43,8 @@ const FeedbackModal = ({ showFeedbackForm, closeHandler, data }) => {
   const sendFeedback = (resubmit) => {
     const formData = new FormData();
 
+    const token = Cookies.get("mentor");
+    formData.append("token", token);
     formData.append("assignment_id", data.assignmentId);
     formData.append("student_id", data.studentId);
     formData.append("subject_id", data.subjectId);

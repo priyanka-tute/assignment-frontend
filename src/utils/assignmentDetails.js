@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export const fetchSubmissions = async () => {
   return [
     {
@@ -83,11 +85,15 @@ export const fetchSubmissions = async () => {
   ];
 };
 
-export const fetchCourseSubmissions = async (course) => {
+export const fetchCourseSubmissions = async (
+  course = "63cac188c796cfd9126be950"
+) => {
+  const token = Cookies.get("mentor_token");
+
   try {
     const res = await fetch(
       process.env.REACT_APP_API_URL +
-        "/mentor/submission?subject_id=63cac188c796cfd9126be950"
+        `/mentor/submission?subject_id=${course}&mentor=${token}`
     );
     const data = await res.json();
     console.log(data);
@@ -244,10 +250,12 @@ export const fetchCourseSubmissions = async (course) => {
 };
 
 export const fetchUnrevSubmissions = async (course) => {
+  const token = Cookies.get("mentor_token");
+
   try {
     const res = await fetch(
       process.env.REACT_APP_API_URL +
-        "https://api.tutedude.com/assignment/mentor/submission/pending"
+        `https://api.tutedude.com/assignment/mentor/submission/pending?mentor=${token}`
     );
     const data = await res.json();
     console.log(data);
