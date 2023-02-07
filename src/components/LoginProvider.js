@@ -25,8 +25,8 @@ const LoginProvider = ({ children }) => {
         // console.log(data);
 
         if (data.success === "true" || data.success === true) {
-          setData(data.dashboard);
-          Cookies.set("token", data.token);
+          setData(data.token);
+          Cookies.set("mentor_token", data.token);
         } else {
           window.alert("Invalid Email or Password");
         }
