@@ -6,7 +6,7 @@ const LoginProvider = ({ children }) => {
   const [data, setData] = useState();
   const [showLogin, setShowLogin] = useState(false);
 
-  const url = "http://api.tutedude.com/assignment/mentor/login";
+  const url = "https://api.tutedude.com/assignment/mentor/login";
 
   const onLogin = (email, password) => {
     fetch(url, {
