@@ -77,7 +77,7 @@ const LoginProvider = ({ children }) => {
 
   // if (showLogin && !data) return <Login onSubmit={onLogin} />;
   if (showLogin) return <Login onSubmit={onLogin} />;
-  if (!data) return "Loading...";
+  // if (!data) return "Loading...";
   return <>{children}</>;
 };
 
