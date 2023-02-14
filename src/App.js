@@ -19,8 +19,8 @@ function App() {
         router={createBrowserRouter(
           createRoutesFromElements(
             <Route path="" element={<Layout />} errorElement={<ErrorPage />}>
-              <Route path="/mentor">
-                <Route path="/mentor" element={<Home />} />
+              <Route path="/mentor/">
+                <Route path="/mentor/" element={<Home />} />
                 <Route path="/mentor/assignments" element={<AssignmentLibrary />} />
                 <Route
                   path="/mentor/assignments/:course"
