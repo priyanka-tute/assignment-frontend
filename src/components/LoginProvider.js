@@ -26,6 +26,7 @@ const LoginProvider = ({ children }) => {
 
         if (data.success === "true" || data.success === true) {
           setData(data.token);
+          setShowLogin(false);
           Cookies.set("mentor_token", data.token);
         } else {
           window.alert("Invalid Email or Password");
@@ -74,7 +75,8 @@ const LoginProvider = ({ children }) => {
     //   });
   }, []);
 
-  if (showLogin && !data) return <Login onSubmit={onLogin} />;
+  // if (showLogin && !data) return <Login onSubmit={onLogin} />;
+  if (showLogin) return <Login onSubmit={onLogin} />;
   if (!data) return "Loading...";
   return <>{children}</>;
 };
